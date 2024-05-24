@@ -42,7 +42,7 @@ func env() {
 func Setup() bool {
 	status := true
 	if err := godotenv.Load(".env"); err != nil {
-		log.Infof("Error loading .env file: ", err.Error())
+		log.Errorf("Error loading .env file: ", err.Error())
 		status = false
 	}
 	env()
