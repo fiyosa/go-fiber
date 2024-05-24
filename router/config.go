@@ -16,7 +16,9 @@ func Config() *fiber.App {
 	r := fiber.New(fiber.Config{
 		Views: html.New("./service/view", ".html"),
 	})
-	r.Use(logger.New())
+	if secret.APP_ENV == "development" {
+		r.Use(logger.New())
+	}
 	r.Use(recover.New())
 
 	r.Use(middleware.Cors())
