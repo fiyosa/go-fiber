@@ -1,6 +1,7 @@
 package db
 
 import (
+	"go-fiber/pkg/secret"
 	"time"
 
 	"gorm.io/gorm"
@@ -16,7 +17,7 @@ type Permission struct {
 }
 
 func (Permission) TableName() string {
-	return "permissions"
+	return secret.DB_SCHEMA + "." + "permissions"
 }
 
 func (p *Permission) GetPermissions(roles []string, permissions *[]string) *gorm.DB {

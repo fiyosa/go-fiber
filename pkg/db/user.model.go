@@ -3,6 +3,7 @@ package db
 import (
 	"go-fiber/lang"
 	"go-fiber/pkg/helper"
+	"go-fiber/pkg/secret"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -23,7 +24,7 @@ type User struct {
 }
 
 func (User) TableName() string {
-	return "users"
+	return secret.DB_SCHEMA + "." + "users"
 }
 
 func (u *User) GetUser(c *fiber.Ctx) (bool, error) {

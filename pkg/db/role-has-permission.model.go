@@ -1,6 +1,7 @@
 package db
 
 import (
+	"go-fiber/pkg/secret"
 	"time"
 )
 
@@ -16,5 +17,5 @@ type RoleHashPermission struct {
 }
 
 func (RoleHashPermission) TableName() string {
-	return "role_has_permissions"
+	return secret.DB_SCHEMA + "." + "role_has_permissions"
 }

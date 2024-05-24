@@ -5,10 +5,10 @@ import (
 	"go-fiber/pkg/secret"
 	"time"
 
+	"github.com/gofiber/fiber/v2/log"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-
-	// "gorm.io/gorm/logger"
+	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 )
 
@@ -35,14 +35,15 @@ func Setup() {
 		secret.DB_PORT,
 		secret.DB_SSLMODE,
 	)
-	// fmt.Println("dsn:", dsn)
+	log.Info("dsn:", dsn)
+	log.Info("shema:", secret.DB_SCHEMA)
 
 	connect, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix: secret.DB_SCHEMA + ".",
 		},
 		SkipDefaultTransaction: true,
-		// Logger:                 logger.Default.LogMode(logger.Info),
+		Logger:                 logger.Default.LogMode(logger.Info),
 		NowFunc: func() time.Time {
 			return time.Now().Local() // timestamps
 		},

@@ -1,6 +1,7 @@
 package db
 
 import (
+	"go-fiber/pkg/secret"
 	"time"
 
 	"gorm.io/gorm"
@@ -21,7 +22,7 @@ type Contact struct {
 }
 
 func (Contact) TableName() string {
-	return "contacts"
+	return secret.DB_SCHEMA + "." + "contacts"
 }
 
 func (c *Contact) Create() *gorm.DB {

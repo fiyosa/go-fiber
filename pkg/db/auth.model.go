@@ -1,6 +1,7 @@
 package db
 
 import (
+	"go-fiber/pkg/secret"
 	"time"
 
 	"gorm.io/gorm"
@@ -18,7 +19,7 @@ type Auth struct {
 }
 
 func (Auth) TableName() string {
-	return "auths"
+	return secret.DB_SCHEMA + "." + "auths"
 }
 
 func (a *Auth) Create() *gorm.DB {
