@@ -10,8 +10,8 @@ import (
 
 func Setup() bool {
 	if secret.APP_ENV != "development" {
-		log.Error("Cannot access cmd while mode development")
-		return true
+		log.Error("Cannot access cmd while mode production")
+		return false
 	}
 
 	dropFlag := flag.Bool("drop", false, "Drop the database tables")
