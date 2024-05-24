@@ -5,7 +5,6 @@ import (
 	"go-fiber/pkg/secret"
 	"time"
 
-	"github.com/gofiber/fiber/v2/log"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -35,8 +34,6 @@ func Setup() {
 		secret.DB_PORT,
 		secret.DB_SSLMODE,
 	)
-	log.Info("dsn:", dsn)
-	log.Info("shema:", secret.DB_SCHEMA)
 
 	connect, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
