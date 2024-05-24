@@ -1,0 +1,56 @@
+definitions:
+  dto.AuthLoginPayload:
+    properties:
+      password:
+        example: ""
+        minLength: 3
+        type: string
+      username:
+        example: ""
+        minLength: 3
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  dto.AuthLoginResponse:
+    properties:
+      token:
+        example: ""
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Service API in Go useing Fiber Framework
+  title: Service API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login
+      parameters:
+      - description: payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AuthLoginPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/dto.AuthLoginResponse'
+      summary: Login
+      tags:
+      - Auth
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
