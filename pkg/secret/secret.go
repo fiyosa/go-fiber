@@ -1,9 +1,9 @@
 package secret
 
 import (
-	"fmt"
 	"os"
 
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/joho/godotenv"
 )
 
@@ -42,7 +42,7 @@ func env() {
 func Setup() bool {
 	status := true
 	if err := godotenv.Load(".env"); err != nil {
-		fmt.Println("Error loading .env file:", err.Error())
+		log.Infof("Error loading .env file: ", err.Error())
 		status = false
 	}
 	env()

@@ -1,12 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"go-fiber/cmd"
 	"go-fiber/pkg/db"
 	"go-fiber/pkg/secret"
 	"go-fiber/pkg/validation"
 	"go-fiber/router"
+
+	"github.com/gofiber/fiber/v2/log"
 )
 
 // @title		Service API
@@ -27,7 +28,7 @@ func main() {
 	}
 
 	if err := validation.Setup(); err != nil {
-		fmt.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 
