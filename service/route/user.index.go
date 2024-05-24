@@ -10,6 +10,19 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// @Summary 	Get users
+// @Description Get users
+// @Tags 		User
+// @Accept 		json
+// @Produce 	json
+// @Param 		page query int false "page"
+// @Param 		limit query int false "limit"
+// @Param 		keyword query string false "keyword"
+// @Param 		orderBy query string false "orderBy"
+// @Param 		sortedBy query string false "sortedBy" Enums(asc, desc)
+// @Success 	200 {object} dto.UserIndexResponse "ok"
+// @Security	BearerAuth
+// @Router 		/user [get]
 func UserIndex(c *fiber.Ctx) error {
 	user := &db.User{}
 	if ok, err := user.GetUser(c); !ok {

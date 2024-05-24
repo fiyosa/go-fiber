@@ -16,14 +16,14 @@ import (
 
 // @Summary 	Login
 // @Description Login
-// @Tags 		Auth
+// @Tags 		Guest
 // @Accept 		json
 // @Produce 	json
-// @Param		payload body dto.GuestLoginPayload true "payload"
+// @Param		payload body dto.GuestLoginRequest true "payload"
 // @Success 	200 {object} dto.GuestLoginResponse "ok"
 // @Router 		/auth/login [post]
 func AuthLogin(c *fiber.Ctx) error {
-	validated := &dto.GuestLoginPayload{}
+	validated := &dto.GuestLoginRequest{}
 	if check, err := helper.Validate(c, validated); check {
 		return err
 	}

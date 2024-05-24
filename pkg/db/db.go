@@ -35,12 +35,19 @@ func Setup() {
 		secret.DB_SSLMODE,
 	)
 
+	var gormLogger logger.Interface
+	if secret.APP_ENV != "development" {
+		gormLogger = logger.Default.LogMode(logger.Silent)
+	} else {
+		gormLogger = logger.Default.LogMode(logger.Info)
+	}
+
 	connect, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix: secret.DB_SCHEMA + ".",
 		},
 		SkipDefaultTransaction: true,
-		Logger:                 logger.Default.LogMode(logger.Info),
+		Logger:                 gormLogger,
 		NowFunc: func() time.Time {
 			return time.Now().Local() // timestamps
 		},

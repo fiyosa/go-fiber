@@ -11,7 +11,7 @@ import (
 
 // @title		Service API
 // @version		1.0
-// @description Service API in Go useing Fiber Framework
+// @description Service API in Go using Fiber Framework
 
 // @securityDefinitions.apikey	BearerAuth
 // @in 							header

@@ -1,11 +1,11 @@
 package dto
 
-type AuthUserResponse struct {
-	Data    AuthUserDataResponse `json:"data"`
+type UserAuthResponse struct {
+	Data    UserAuthDataResponse `json:"data"`
 	Message string               `json:"message" example:""`
 }
 
-type AuthUserDataResponse struct {
+type UserAuthDataResponse struct {
 	Id        string `json:"id" example:""`
 	Username  string `json:"username" example:""`
 	Name      string `json:"name" example:""`

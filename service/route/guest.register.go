@@ -10,6 +10,14 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// @Summary 	Register
+// @Description Register
+// @Tags 		Guest
+// @Accept 		json
+// @Produce 	json
+// @Param		payload body dto.GuestRegisterRequest true "payload"
+// @Success 	200 {object} dto.GuestRegisterDataResponse "ok"
+// @Router 		/auth/register [post]
 func GuestRegister(c *fiber.Ctx) error {
 	validated := &dto.GuestRegisterRequest{}
 	if check, err := helper.Validate(c, validated); check {
