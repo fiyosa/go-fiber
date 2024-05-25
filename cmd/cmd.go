@@ -10,7 +10,7 @@ import (
 
 func Setup() bool {
 	if secret.APP_ENV != "development" {
-		log.Error("Cannot access cmd while mode production")
+		log.Info("Cannot access cmd while mode production")
 		return false
 	}
 
