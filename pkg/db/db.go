@@ -3,6 +3,8 @@ package db
 import (
 	"fmt"
 	"go-fiber/pkg/secret"
+	"log"
+	"os"
 	"time"
 
 	"gorm.io/driver/postgres"
@@ -35,11 +37,11 @@ func Setup() {
 		secret.DB_SSLMODE,
 	)
 
-	var gormLogger logger.Interface
+	var setLogger logger.Interface
 	if secret.APP_ENV != "development" {
-		gormLogger = logger.Default.LogMode(logger.Silent)
+		setLogger = logger.Default.LogMode(logger.Silent)
 	} else {
-		gormLogger = logger.Default.LogMode(logger.Info)
+		setLogger = gormLogger()
 	}
 
 	connect, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
@@ -47,7 +49,7 @@ func Setup() {
 			TablePrefix: secret.DB_SCHEMA + ".",
 		},
 		SkipDefaultTransaction: true,
-		Logger:                 gormLogger,
+		Logger:                 setLogger,
 		NowFunc: func() time.Time {
 			return time.Now().Local() // timestamps
 		},
@@ -58,4 +60,29 @@ func Setup() {
 	}
 
 	G = connect
+}
+
+func gormLogger() logger.Interface {
+	_, err := os.Stat("logs")
+	if os.IsNotExist(err) {
+		err := os.MkdirAll("logs", 0755)
+		if err != nil {
+			log.Fatalf("error creating directory logs: %v", err)
+		}
+	}
+
+	file, err := os.OpenFile("logs/gorm.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalf("error opening file: %v", err)
+	}
+
+	return logger.New(
+		log.New(file, "\r\n", log.LstdFlags), // io writer
+		logger.Config{
+			SlowThreshold:             0,           // Disable slow threshold
+			LogLevel:                  logger.Info, // Log level
+			IgnoreRecordNotFoundError: true,        // Ignore ErrRecordNotFound error for logger
+			Colorful:                  false,       // Disable color
+		},
+	)
 }

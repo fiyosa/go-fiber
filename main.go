@@ -3,6 +3,7 @@ package main
 import (
 	"go-fiber/cmd"
 	"go-fiber/pkg/db"
+	"go-fiber/pkg/logger"
 	"go-fiber/pkg/secret"
 	"go-fiber/pkg/validation"
 	"go-fiber/router"
@@ -20,6 +21,10 @@ import (
 // @description 				Type "Bearer" followed by a space and JWT token.
 func main() {
 	secret.Setup()
+
+	if logger.Setup() {
+		return
+	}
 
 	db.Setup()
 
