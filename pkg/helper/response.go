@@ -10,6 +10,14 @@ type Paginate struct {
 	Total int `json:"total" example:"0"`
 }
 
+func SendCustom(c *fiber.Ctx, data interface{}, statusCode ...int) error {
+	code := fiber.StatusOK // Default status code
+	if len(statusCode) > 0 {
+		code = statusCode[0]
+	}
+	return c.Status(code).JSON(data)
+}
+
 func SendSuccess(c *fiber.Ctx, msg string) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"message": msg,

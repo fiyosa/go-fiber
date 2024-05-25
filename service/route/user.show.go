@@ -10,18 +10,26 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// @Summary 	Get user by auth
-// @Description Get user by auth
+// @Summary 	Get user by id
+// @Description Get user by id
 // @Tags 		User
 // @Accept 		json
 // @Produce 	json
+// @Param 		id path string true "id"
 // @Success 	200 {object} dto.UserAuthResponse "ok"
 // @Security	BearerAuth
-// @Router 		/auth/user [get]
-func UserAuth(c *fiber.Ctx) error {
+// @Router 		/user/{id} [get]
+func UserShow(c *fiber.Ctx) error {
+	get_id := c.Params("id")
+	user_id, err := hash.Decode(get_id)
+	if err != nil {
+		return helper.SendError(c, lang.L(lang.SetL().NOT_FOUND, fiber.Map{"operator": lang.SetL().USER}))
+	}
+
 	user := &db.User{}
-	if ok, err := user.GetUser(c); !ok {
-		return err
+	user.Show(user_id)
+	if user.Id == 0 {
+		return helper.SendError(c, lang.L(lang.SetL().NOT_FOUND, fiber.Map{"operator": lang.SetL().USER}))
 	}
 
 	id, _ := hash.Encode(user.Id)

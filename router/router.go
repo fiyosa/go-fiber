@@ -12,11 +12,13 @@ func Setup(r *fiber.App) *fiber.App {
 	p := r.Group("/api")
 
 	p.Post("/auth/register", route.GuestRegister)
-	p.Post("/auth/login", route.AuthLogin)
+	p.Post("/auth/login", route.GuestLogin)
+	p.Post("/auth/upload", route.GuestUpload)
 	p.Get("/auth/secret", route.AuthSecret)
 
 	p.Get("/auth/user", auth(), route.UserAuth)
 	p.Get("/user", auth("user_index"), route.UserIndex)
+	p.Get("/user/:id", auth("user_show"), route.UserShow)
 
 	r.Use(route.AuthNotFound)
 

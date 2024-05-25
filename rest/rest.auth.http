@@ -28,7 +28,7 @@ GET  {{HOST}}/auth/user
 Authorization: {{TOKEN}}
 
 ### 
-
+ 
 POST {{HOST}}/auth/upload
 Content-Type: multipart/form-data; boundary=Boundary
 

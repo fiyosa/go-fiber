@@ -56,6 +56,21 @@ definitions:
     - password
     - username
     type: object
+  dto.GuestUploadResponse:
+    properties:
+      fieldname:
+        example: ""
+        type: string
+      mimetype:
+        example: ""
+        type: string
+      name:
+        example: ""
+        type: string
+      size:
+        example: 0
+        type: integer
+    type: object
   dto.UserAuthDataResponse:
     properties:
       created_at:
@@ -71,6 +86,14 @@ definitions:
         example: ""
         type: string
       username:
+        example: ""
+        type: string
+    type: object
+  dto.UserAuthResponse:
+    properties:
+      data:
+        $ref: '#/definitions/dto.UserAuthDataResponse'
+      message:
         example: ""
         type: string
     type: object
@@ -166,6 +189,32 @@ paths:
       summary: Register
       tags:
       - Guest
+  /auth/upload:
+    post:
+      consumes:
+      - application/json
+      description: Upload
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: name
+        in: formData
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/dto.GuestUploadResponse'
+      summary: Upload
+      tags:
+      - Guest
   /auth/user:
     get:
       consumes:
@@ -177,7 +226,7 @@ paths:
         "200":
           description: ok
           schema:
-            $ref: '#/definitions/dto.UserAuthDataResponse'
+            $ref: '#/definitions/dto.UserAuthResponse'
       security:
       - BearerAuth: []
       summary: Get user by auth
@@ -222,6 +271,29 @@ paths:
       security:
       - BearerAuth: []
       summary: Get users
+      tags:
+      - User
+  /user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get user by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/dto.UserAuthResponse'
+      security:
+      - BearerAuth: []
+      summary: Get user by id
       tags:
       - User
 securityDefinitions:

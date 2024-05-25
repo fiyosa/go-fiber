@@ -22,7 +22,7 @@ import (
 // @Param		payload body dto.GuestLoginRequest true "payload"
 // @Success 	200 {object} dto.GuestLoginResponse "ok"
 // @Router 		/auth/login [post]
-func AuthLogin(c *fiber.Ctx) error {
+func GuestLogin(c *fiber.Ctx) error {
 	validated := &dto.GuestLoginRequest{}
 	if check, err := helper.Validate(c, validated); check {
 		return err

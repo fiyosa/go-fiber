@@ -44,15 +44,16 @@ func GuestRegister(c *fiber.Ctx) error {
 	user.Create()
 
 	id, _ := hash.Encode(user.Id)
-	return helper.SendData(
-		c,
-		lang.L(lang.SetL().SAVED_SUCCESSFULLY, fiber.Map{"operator": lang.SetL().USER}),
-		dto.GuestRegisterDataResponse{
+	res := dto.UserAuthResponse{
+		Data: dto.UserAuthDataResponse{
 			Id:        id,
 			Username:  user.Username,
 			Name:      user.Name,
 			CreatedAt: helper.Time2Str(user.CreatedAt),
 			UpdatedAt: helper.Time2Str(user.UpdatedAt),
 		},
-	)
+		Message: lang.L(lang.SetL().RETRIEVED_SUCCESSFULLY, fiber.Map{"operator": lang.SetL().USER}),
+	}
+
+	return helper.SendCustom(c, res)
 }

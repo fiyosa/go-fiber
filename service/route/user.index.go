@@ -59,14 +59,15 @@ func UserIndex(c *fiber.Ctx) error {
 		})
 	}
 
-	return helper.SendDatas(
-		c,
-		lang.L(lang.SetL().RETRIEVED_SUCCESSFULLY, fiber.Map{"operator": lang.SetL().USER}),
-		newUsers,
-		helper.Paginate{
+	res := dto.UserIndexResponse{
+		Data: newUsers,
+		Pagination: helper.Paginate{
 			Page:  query.Page,
 			Limit: query.Limit,
 			Total: int(countUsers),
 		},
-	)
+		Message: lang.L(lang.SetL().RETRIEVED_SUCCESSFULLY, fiber.Map{"operator": lang.SetL().USER}),
+	}
+
+	return helper.SendCustom(c, res)
 }

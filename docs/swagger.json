@@ -75,6 +75,45 @@
                 }
             }
         },
+        "/auth/upload": {
+            "post": {
+                "description": "Upload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Guest"
+                ],
+                "summary": "Upload",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "name",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GuestUploadResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/auth/user": {
             "get": {
                 "security": [
@@ -97,7 +136,7 @@
                     "200": {
                         "description": "ok",
                         "schema": {
-                            "$ref": "#/definitions/dto.UserAuthDataResponse"
+                            "$ref": "#/definitions/dto.UserAuthResponse"
                         }
                     }
                 }
@@ -162,6 +201,43 @@
                         "description": "ok",
                         "schema": {
                             "$ref": "#/definitions/dto.UserIndexResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get user by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/dto.UserAuthResponse"
                         }
                     }
                 }
@@ -247,6 +323,27 @@
                 }
             }
         },
+        "dto.GuestUploadResponse": {
+            "type": "object",
+            "properties": {
+                "fieldname": {
+                    "type": "string",
+                    "example": ""
+                },
+                "mimetype": {
+                    "type": "string",
+                    "example": ""
+                },
+                "name": {
+                    "type": "string",
+                    "example": ""
+                },
+                "size": {
+                    "type": "integer",
+                    "example": 0
+                }
+            }
+        },
         "dto.UserAuthDataResponse": {
             "type": "object",
             "properties": {
@@ -267,6 +364,18 @@
                     "example": ""
                 },
                 "username": {
+                    "type": "string",
+                    "example": ""
+                }
+            }
+        },
+        "dto.UserAuthResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/dto.UserAuthDataResponse"
+                },
+                "message": {
                     "type": "string",
                     "example": ""
                 }

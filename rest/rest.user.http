@@ -19,7 +19,7 @@ Authorization: {{TOKEN}}
 
 ###
 
-GET {{HOST}}/user/:id
+GET {{HOST}}/user/kNj5VLv1lg
 Authorization: {{TOKEN}}
 
 ###
