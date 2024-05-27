@@ -29,7 +29,8 @@ func connect(t *testing.T) *gorm.DB {
 			TablePrefix: secret.GetEnv("DB_SCHEMA", "public") + ".",
 		},
 		SkipDefaultTransaction: true,
-		Logger:                 logger.Default.LogMode(logger.Silent),
+		// Logger:                 logger.Default.LogMode(logger.Info),
+		Logger: logger.Default.LogMode(logger.Silent),
 		NowFunc: func() time.Time {
 			return time.Now().Local() // timestamps
 		},
@@ -47,14 +48,14 @@ func CreateUser(t *testing.T) db.User {
 		Name:     "test",
 		Password: pass,
 	}
-	if err := connect(t).Table("users").Create(&user).Error; err != nil {
+	if err := connect(t).Create(&user).Error; err != nil {
 		t.Fatal(err.Error())
 	}
 	return user
 }
 
 func DeleteUser(t *testing.T, username string) {
-	if err := connect(t).Table("users").Where("username = ?", username).Delete(&db.User{}).Error; err != nil {
+	if err := connect(t).Where("username = ?", username).Delete(&db.User{}).Error; err != nil {
 		t.Fatal(err.Error())
 	}
 }

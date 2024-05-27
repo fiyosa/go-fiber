@@ -1,7 +1,6 @@
 package db
 
 import (
-	"go-fiber/pkg/secret"
 	"time"
 
 	"gorm.io/gorm"
@@ -19,10 +18,6 @@ type Address struct {
 	UpdatedAt  time.Time `json:"updated_at" gorm:"type:timestamp(0);not null;default:CURRENT_TIMESTAMP"`
 
 	Contact Contact `gorm:"foreignKey:ContactId;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-}
-
-func (Address) TableName() string {
-	return secret.DB_SCHEMA + "." + "addresses"
 }
 
 func (a *Address) Create() *gorm.DB {

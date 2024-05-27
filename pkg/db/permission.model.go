@@ -1,7 +1,6 @@
 package db
 
 import (
-	"go-fiber/pkg/secret"
 	"time"
 
 	"gorm.io/gorm"
@@ -14,10 +13,6 @@ type Permission struct {
 	UpdatedAt time.Time `json:"updated_at" gorm:"type:timestamp(0);not null;default:CURRENT_TIMESTAMP"`
 
 	RoleHashPermission []RoleHashPermission `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-}
-
-func (Permission) TableName() string {
-	return secret.DB_SCHEMA + "." + "permissions"
 }
 
 func (p *Permission) GetPermissions(roles []string, permissions *[]string) *gorm.DB {

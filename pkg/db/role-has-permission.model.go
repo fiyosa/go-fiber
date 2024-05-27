@@ -1,7 +1,6 @@
 package db
 
 import (
-	"go-fiber/pkg/secret"
 	"time"
 )
 
@@ -14,8 +13,4 @@ type RoleHashPermission struct {
 
 	Role       Role       `gorm:"foreignKey:RoleId;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	Permission Permission `gorm:"foreignKey:PermissionId;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-}
-
-func (RoleHashPermission) TableName() string {
-	return secret.DB_SCHEMA + "." + "role_has_permissions"
 }

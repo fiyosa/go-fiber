@@ -17,7 +17,7 @@ func TestGuestLoginSuccess(t *testing.T) {
 	CreateUser(t)
 
 	jsonData, err := json.Marshal(map[string]string{
-		"username": "admin",
+		"username": "test",
 		"password": "Password",
 	})
 	if err != nil {
@@ -60,8 +60,8 @@ func TestGuestLoginFail(t *testing.T) {
 	CreateUser(t)
 
 	jsonData, err := json.Marshal(map[string]string{
-		"username": "admina",
-		"password": "Password",
+		"username": "",
+		"password": "",
 	})
 	if err != nil {
 		fmt.Println(err.Error())
@@ -94,7 +94,9 @@ func TestGuestLoginFail(t *testing.T) {
 	}
 
 	_, message := body["message"]
+	_, errors := body["errors"]
 
-	assert.Equal(t, fiber.StatusNotFound, resp.StatusCode)
+	assert.Equal(t, fiber.StatusBadRequest, resp.StatusCode)
 	assert.True(t, message)
+	assert.True(t, errors)
 }

@@ -1,7 +1,6 @@
 package db
 
 import (
-	"go-fiber/pkg/secret"
 	"time"
 )
 
@@ -14,8 +13,4 @@ type UserHasRole struct {
 
 	User User `gorm:"foreignKey:UserId;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	Role Role `gorm:"foreignKey:RoleId;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-}
-
-func (UserHasRole) TableName() string {
-	return secret.DB_SCHEMA + "." + "user_has_roles"
 }

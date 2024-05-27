@@ -47,6 +47,7 @@ func Setup() {
 	connect, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix: secret.DB_SCHEMA + ".",
+			// SingularTable: true,
 		},
 		SkipDefaultTransaction: true,
 		Logger:                 setLogger,

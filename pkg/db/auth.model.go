@@ -1,7 +1,6 @@
 package db
 
 import (
-	"go-fiber/pkg/secret"
 	"time"
 
 	"gorm.io/gorm"
@@ -16,10 +15,6 @@ type Auth struct {
 	UpdatedAt time.Time `json:"updated_at" gorm:"type:timestamp(0);not null;default:CURRENT_TIMESTAMP"`
 
 	User User `gorm:"foreignKey:UserId;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-}
-
-func (Auth) TableName() string {
-	return secret.DB_SCHEMA + "." + "auths"
 }
 
 func (a *Auth) Create() *gorm.DB {

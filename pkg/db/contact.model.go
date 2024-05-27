@@ -1,7 +1,6 @@
 package db
 
 import (
-	"go-fiber/pkg/secret"
 	"time"
 
 	"gorm.io/gorm"
@@ -19,10 +18,6 @@ type Contact struct {
 
 	User      User      `gorm:"foreignKey:UserId;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	Addresses []Address `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
-}
-
-func (Contact) TableName() string {
-	return secret.DB_SCHEMA + "." + "contacts"
 }
 
 func (c *Contact) Create() *gorm.DB {
