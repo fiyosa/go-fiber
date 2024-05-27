@@ -1,3 +1,15 @@
+## Golang Fiber
+```
+go mod tidy
+```
+Create database postgresql with name "go-fiber" in schema "public"
+```
+go run main.go --drop --migrate --seed
+```
+```
+go run main.go
+```
+
 ## Package
 
 ### gin
@@ -40,4 +52,6 @@ go get -u github.com/swaggo/gin-swagger
 go get -u github.com/swaggo/files
 
 swag init
+or
+swag i
 ```
