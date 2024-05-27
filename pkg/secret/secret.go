@@ -24,19 +24,19 @@ var (
 )
 
 func env() {
-	PORT = getEnv("PORT", "4000")
-	APP_ENV = getEnv("APP_ENV", "development")
-	APP_LOCALE = getEnv("APP_LOCALE", "en")
-	APP_SECRET = getEnv("APP_SECRET", "secret")
-	APP_URL = getEnv("APP_URL", "localhost:4000")
+	PORT = GetEnv("PORT", "4000")
+	APP_ENV = GetEnv("APP_ENV", "development")
+	APP_LOCALE = GetEnv("APP_LOCALE", "en")
+	APP_SECRET = GetEnv("APP_SECRET", "secret")
+	APP_URL = GetEnv("APP_URL", "localhost:4000")
 
-	DB_HOST = getEnv("DB_HOST", "localhost")
-	DB_PORT = getEnv("DB_PORT", "5432")
-	DB_NAME = getEnv("DB_NAME", "go-fiber")
-	DB_USER = getEnv("DB_USER", "postgres")
-	DB_PASS = getEnv("DB_PASS", "\"\"")
-	DB_SCHEMA = getEnv("DB_SCHEMA", "public")
-	DB_SSLMODE = getEnv("DB_SSLMODE", "disable")
+	DB_HOST = GetEnv("DB_HOST", "localhost")
+	DB_PORT = GetEnv("DB_PORT", "5432")
+	DB_NAME = GetEnv("DB_NAME", "go-fiber")
+	DB_USER = GetEnv("DB_USER", "postgres")
+	DB_PASS = GetEnv("DB_PASS", "\"\"")
+	DB_SCHEMA = GetEnv("DB_SCHEMA", "public")
+	DB_SSLMODE = GetEnv("DB_SSLMODE", "disable")
 }
 
 func Setup() bool {
@@ -49,7 +49,7 @@ func Setup() bool {
 	return status
 }
 
-func getEnv(key, fallback string) string {
+func GetEnv(key, fallback string) string {
 	if value, ok := os.LookupEnv(key); ok {
 		return value
 	}
