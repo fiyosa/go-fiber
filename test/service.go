@@ -41,21 +41,38 @@ func connect(t *testing.T) *gorm.DB {
 	return conn
 }
 
-func CreateUser(t *testing.T) db.User {
+func close(t *testing.T, c *gorm.DB) {
+	sqlDB, err := c.DB()
+	if err != nil {
+		t.Fatal("Failed to get database connection:", err)
+	}
+	err = sqlDB.Close()
+	if err != nil {
+		t.Fatal("Failed to close database connection:", err)
+	}
+}
+
+func CreateUser(t *testing.T) *db.User {
+	c := connect(t)
+	defer close(t, c)
+
 	pass, _ := hash.Create("Password")
-	user := db.User{
+	user := &db.User{
 		Username: "test",
 		Name:     "test",
 		Password: pass,
 	}
-	if err := connect(t).Create(&user).Error; err != nil {
+	if err := c.Create(&user).Error; err != nil {
 		t.Fatal(err.Error())
 	}
 	return user
 }
 
 func DeleteUser(t *testing.T, username string) {
-	if err := connect(t).Where("username = ?", username).Delete(&db.User{}).Error; err != nil {
+	c := connect(t)
+	defer close(t, c)
+
+	if err := c.Where("username = ?", username).Delete(&db.User{}).Error; err != nil {
 		t.Fatal(err.Error())
 	}
 }
